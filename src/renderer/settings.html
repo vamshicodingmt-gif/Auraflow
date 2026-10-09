@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' ws://localhost:* http://localhost:*; media-src 'self' blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="color-scheme" content="dark" />
+    <title>AuraFlow · Settings</title>
+  </head>
+  <body class="settings-page">
+    <div class="settings">
+      <header class="settings-head">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <p class="eyebrow">Configuration</p>
+          <h1 class="display settings-title">Settings</h1>
+        </div>
+      </header>
+
+      <div class="welcome" id="welcome" hidden>
+        <p class="welcome-title display">First rite</p>
+        <p class="welcome-text">
+          Paste a Gemini API key to wake AuraFlow. Keys are free to create in Google AI Studio and are stored
+          encrypted on this device.
+        </p>
+        <button class="btn btn-ghost btn-sm" type="button" id="openKeyPage">Get a Gemini key</button>
+      </div>
+
+      <section class="section" aria-labelledby="sec-engine">
+        <header class="section-head">
+          <span class="section-index mono">01</span>
+          <h2 id="sec-engine">Engine</h2>
+        </header>
+        <div class="section-body">
+          <label class="label field-label" for="apiKey">Gemini API key</label>
+          <div class="key-row">
+            <input id="apiKey" class="input mono" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your key" />
+            <button class="icon-btn" type="button" id="toggleKey" aria-label="Show key" title="Show key"></button>
+          </div>
+          <div class="key-actions">
+            <button class="btn btn-primary btn-sm" type="button" id="saveKey">Save key</button>
+            <button class="btn btn-sm" type="button" id="testKey">Test connection</button>
+            <button class="btn btn-danger btn-sm" type="button" id="clearKey">Remove</button>
+          </div>
+          <p class="hint" id="keyStatus" aria-live="polite"></p>
+
+          <div class="row">
+            <div class="row-text">
+              <div class="row-title">Transcription</div>
+              <div class="row-desc">Speech-to-text with smart formatting and your custom vocabulary.</div>
+            </div>
+            <span class="chip">gemini-3.5-transcribe</span>
+          </div>
+          <div class="row">
+            <div class="row-text">
+              <div class="row-title">Refinement model</div>
+              <div class="row-desc">Polishes the transcript for your chosen output style.</div>
+            </div>
+            <select class="select select-compact" id="refineModel" aria-label="Refinement model">
+              <option value="gemini-3.5-flash-lite">Flash-Lite · fastest</option>
+              <option value="gemini-3.5-flash">Flash · balanced</option>
+              <option value="gemini-3.8-flash">3.8 Flash · highest quality</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="sec-hotkey">
+        <header class="section-head">
+          <span class="section-index mono">02</span>
+          <h2 id="sec-hotkey">Hotkey</h2>
+        </header>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-text">
+              <div class="row-title">Start / stop dictation</div>
+              <div class="row-desc">Press once to start, press again to stop. Escape cancels.</div>
+            </div>
+            <div class="hotkey-field">
+              <button class="hotkey-btn" type="button" id="hotkeyBtn" aria-label="Change hotkey"></button>
+              <button class="btn btn-ghost btn-sm" type="button" id="hotkeyReset">Reset</button>
+            </div>
+          </div>
+          <p class="hint" id="hotkeyHint">Click the shortcut, then press the keys you want to use.</p>
+          <p class="hint hint-error" id="hotkeyError" hidden></p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="sec-output">
+        <header class="section-head">
+          <span class="section-index mono">03</span>
+          <h2 id="sec-output">Output</h2>
+        </header>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-text">
+              <div class="row-title">Output style</div>
+              <div class="row-desc" id="styleDesc"></div>
+            </div>
+            <select class="select select-compact" id="outputStyle" aria-label="Output style">
+              <option value="clean">Clean</option>
+              <option value="formal">Formal</option>
+              <option value="casual">Casual</option>
+              <option value="email">Email</option>
+              <option value="bullets">Bullets</option>
+              <option value="verbatim">Verbatim</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="row-text">
+              <div class="row-title">Language</div>
+              <div class="row-desc">Auto-detect handles code-switching. Pick one to improve accuracy.</div>
+            </div>
+            <select class="select select-compact" id="languageCode" aria-label="Language">
+              <option value="">Auto-detect</option>
+              <option value="en-US">English (US)</option>
+              <option value="en-GB">English (UK)</option>
+              <option value="es-ES">Español</option>
+              <option value="fr-FR">Français</option>
+              <option value="de-DE">Deutsch</option>
+              <option value="pt-BR">Português (BR)</option>
+              <option value="it-IT">Italiano</option>
+              <option value="hi-IN">हिन्दी</option>
+              <option value="ja-JP">日本語</option>
+              <option value="ko-KR">한국어</option>
+            </select>
+          </div>
+
+          <div class="vocab">
+            <label class="label field-label" for="vocabulary">Custom vocabulary</label>
+            <textarea id="vocabulary" class="textarea" spellcheck="false" placeholder="One term per line&#10;e.g. AuraFlow&#10;Kubernetes&#10;Dr. Okafor"></textarea>
+            <div class="vocab-foot">
+              <p class="hint" id="vocabHint">Names, acronyms and jargon the transcriber should spell correctly.</p>
+              <span class="mono dim" id="vocabCount">0 / 100</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="sec-behaviour">
+        <header class="section-head">
+          <span class="section-index mono">04</span>
+          <h2 id="sec-behaviour">Behaviour</h2>
+        </header>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-text"><div class="row-title">Auto-paste</div><div class="row-desc">Type the result into the active app automatically.</div></div>
+            <button class="switch" type="button" role="switch" id="autoPaste" aria-checked="false" aria-label="Auto-paste"></button>
+          </div>
+          <div class="row">
+            <div class="row-text"><div class="row-title">Restore clipboard</div><div class="row-desc">Put back whatever you had copied before pasting.</div></div>
+            <button class="switch" type="button" role="switch" id="restoreClipboard" aria-checked="false" aria-label="Restore clipboard"></button>
+          </div>
+          <div class="row">
+            <div class="row-text"><div class="row-title">Sound cues</div><div class="row-desc">A soft tone when recording starts and stops.</div></div>
+            <button class="switch" type="button" role="switch" id="soundCues" aria-checked="false" aria-label="Sound cues"></button>
+          </div>
+          <div class="row">
+            <div class="row-text"><div class="row-title">Keep history</div><div class="row-desc">Save dictations locally so you can search and copy them later.</div></div>
+            <button class="switch" type="button" role="switch" id="saveHistory" aria-checked="false" aria-label="Keep history"></button>
+          </div>
+          <div class="row">
+            <div class="row-text"><div class="row-title">Launch at login</div><div class="row-desc">Start quietly in the menu bar or system tray.</div></div>
+            <button class="switch" type="button" role="switch" id="launchAtLogin" aria-checked="false" aria-label="Launch at login"></button>
+          </div>
+          <div class="row">
+            <div class="row-text"><div class="row-title">Pill position</div><div class="row-desc">Where the recording pill appears.</div></div>
+            <select class="select select-compact" id="pillPlacement" aria-label="Pill position">
+              <option value="bottom">Bottom centre</option>
+              <option value="cursor">Near the cursor</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="row-text"><div class="row-title">Longest recording</div><div class="row-desc">Recording stops automatically at this length.</div></div>
+            <select class="select select-compact" id="maxRecordingSeconds" aria-label="Longest recording">
+              <option value="60">1 minute</option>
+              <option value="120">2 minutes</option>
+              <option value="300">5 minutes</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="sec-mic">
+        <header class="section-head">
+          <span class="section-index mono">05</span>
+          <h2 id="sec-mic">Microphone</h2>
+        </header>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-text"><div class="row-title">Input device</div><div class="row-desc" id="micStatus">Allow microphone access to list your devices.</div></div>
+            <select class="select select-compact" id="microphone" aria-label="Input device"></select>
+          </div>
+          <div class="meter-row">
+            <canvas class="meter" id="meter" aria-label="Live microphone level"></canvas>
+            <button class="btn btn-sm" type="button" id="testMic">Test mic</button>
+          </div>
+          <div class="key-actions" id="micActions">
+            <button class="btn btn-ghost btn-sm" type="button" id="allowMic">Allow microphone</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="sec-perms">
+        <header class="section-head">
+          <span class="section-index mono">06</span>
+          <h2 id="sec-perms">Permissions</h2>
+        </header>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-text"><div class="row-title">Microphone</div><div class="row-desc" id="permMic">Checking…</div></div>
+            <button class="btn btn-ghost btn-sm" type="button" id="openMicSettings">Open settings</button>
+          </div>
+          <div class="row" id="accessRow">
+            <div class="row-text"><div class="row-title">Accessibility</div><div class="row-desc" id="permAccess">Needed on macOS so AuraFlow can press paste for you.</div></div>
+            <button class="btn btn-ghost btn-sm" type="button" id="openAccessSettings">Open settings</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="sec-about">
+        <header class="section-head">
+          <span class="section-index mono">07</span>
+          <h2 id="sec-about">About</h2>
+        </header>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-text"><div class="row-title">AuraFlow <span class="mono dim" id="aboutVersion"></span></div><div class="row-desc" id="updateStatus">Goth Edition · built for focus.</div></div>
+            <button class="btn btn-sm" type="button" id="checkUpdates">Check for updates</button>
+          </div>
+          <div class="key-actions">
+            <button class="btn btn-ghost btn-sm" type="button" id="openRepo">Source on GitHub</button>
+            <button class="btn btn-danger btn-sm" type="button" id="quitApp">Quit Flow (Goth Edition)</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="./app/settings.ts"></script>
+  </body>
+</html>
