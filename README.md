@@ -12,6 +12,8 @@ Gothic voice dictation for macOS, Windows and Linux. Press **Option + Space** on
 
 The app is built with Electron, TypeScript and Vite. Everything runs from this repository.
 
+> **Also in this repository:** [VoiceFlow-Lite](voiceflow-lite/README.md) is a lighter, Python-based push-to-talk dictation tool for macOS and Windows. It uses the same Gemini models, lives in `voiceflow-lite/`, and has its own setup instructions.
+
 ---
 
 ## Quick start
