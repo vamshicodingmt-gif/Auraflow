@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "voiceflow-lite"
+version = "0.1.0"
+description = "Push-to-talk dictation for macOS and Windows: Gemini transcription and cleanup, pasted where you type."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.26",
+    "sounddevice>=0.5",
+    "pynput>=1.7.7",
+    "pyperclip>=1.9",
+    "requests>=2.31",
+    "keyring>=25",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "mypy>=1.10", "ruff>=0.5"]
+
+[project.scripts]
+voiceflow-lite = "voiceflow.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["voiceflow*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
+files = ["voiceflow"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+# Broad "except Exception" handlers are intentional here: audio, clipboard and network
+# failures must never crash the app, so they are not flagged.
+select = ["E", "F", "W", "B"]
+ignore = ["E501"]  # user-facing messages and prompt text are intentionally long

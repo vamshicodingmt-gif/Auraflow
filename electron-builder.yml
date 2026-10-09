@@ -1,0 +1,81 @@
+# electron-builder configuration. Build with `npm run dist` (current OS) or `npm run dist:mac|win|linux`.
+appId: com.auraflow.goth
+productName: AuraFlow
+copyright: Copyright (c) AuraFlow contributors
+directories:
+  output: release
+  buildResources: build
+files:
+  - dist-electron/**/*
+  - dist-renderer/**/*
+  - package.json
+  - "!**/*.map"
+extraResources:
+  - from: build/icon.png
+    to: build/icon.png
+  - from: build/icon.ico
+    to: build/icon.ico
+  - from: assets/tray
+    to: assets/tray
+asar: true
+npmRebuild: false
+publish: null
+
+mac:
+  category: public.app-category.productivity
+  icon: build/icon.icns
+  target:
+    - target: dmg
+      arch:
+        - arm64
+        - x64
+    - target: zip
+      arch:
+        - arm64
+        - x64
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    NSMicrophoneUsageDescription: AuraFlow records your voice only while you dictate, then sends that audio to Google Gemini with your own API key.
+    NSAppleEventsUsageDescription: AuraFlow uses System Events to press Command+V so dictated text lands in the app you are using.
+
+dmg:
+  title: "AuraFlow ${version}"
+  icon: build/icon.icns
+
+win:
+  icon: build/icon.ico
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: portable
+      arch:
+        - x64
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: AuraFlow
+  uninstallDisplayName: AuraFlow
+  installerIcon: build/icon.ico
+  uninstallerIcon: build/icon.ico
+  installerHeaderIcon: build/icon.ico
+  artifactName: "AuraFlow-Setup-${version}.${ext}"
+
+portable:
+  artifactName: "AuraFlow-Portable-${version}.${ext}"
+
+linux:
+  icon: build/icons
+  category: Utility
+  synopsis: Gothic voice dictation powered by Gemini
+  description: AuraFlow (Goth Edition) turns speech into polished text and pastes it wherever you type.
+  target:
+    - AppImage
+    - deb
+  artifactName: "AuraFlow-${version}-${arch}.${ext}"

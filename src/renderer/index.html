@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' ws://localhost:* http://localhost:*; media-src 'self' blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="color-scheme" content="dark" />
+    <title>AuraFlow · Dashboard</title>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <div class="brand-text">
+            <span class="brand-name display">AuraFlow</span>
+            <span class="brand-sub">Goth Edition</span>
+          </div>
+        </div>
+
+        <nav class="nav" aria-label="Dashboard sections">
+          <button class="nav-item is-active" type="button" data-view="overview" aria-current="page">
+            <span class="nav-icon" aria-hidden="true"></span>Overview
+          </button>
+          <button class="nav-item" type="button" data-view="history">
+            <span class="nav-icon" aria-hidden="true"></span>History
+            <span class="nav-count mono" id="historyCount">0</span>
+          </button>
+          <button class="nav-item" type="button" id="openSettings">
+            <span class="nav-icon" aria-hidden="true"></span>Settings
+          </button>
+        </nav>
+
+        <div class="engine card">
+          <p class="label">Engine</p>
+          <div class="engine-row">
+            <span class="status-dot" id="keyDot"></span>
+            <span id="keyText">Checking key…</span>
+          </div>
+          <p class="engine-line mono" id="engineModel"></p>
+          <p class="engine-line muted">Audio goes to Gemini only while you dictate.</p>
+        </div>
+
+        <div class="sidebar-foot">
+          <button class="btn btn-ghost btn-sm" type="button" id="checkUpdates">Check for updates</button>
+          <p class="dim mono version" id="versionText"></p>
+        </div>
+      </aside>
+
+      <main class="main">
+        <section class="view" data-view="overview">
+          <header class="hero">
+            <p class="eyebrow">Voice, transcribed in shadow</p>
+            <h1 class="display hero-title">Speak. <span class="accent">Be written.</span></h1>
+            <p class="lede">
+              Press your hotkey in any app, talk, and AuraFlow pastes the polished words right where your cursor waits.
+            </p>
+            <div class="hero-actions">
+              <button class="btn btn-primary btn-lg" type="button" id="startBtn">
+                <span class="btn-dot" aria-hidden="true"></span>
+                <span id="startLabel">Start dictation</span>
+              </button>
+              <div class="hotkey-chip">
+                <span class="label">Hotkey</span>
+                <span class="hotkey-keys" id="hotkeyKeys"></span>
+              </div>
+            </div>
+          </header>
+
+          <div class="stats" id="stats"></div>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h2 class="panel-title">Recent dictations</h2>
+              <button class="btn btn-ghost btn-sm" type="button" data-view-link="history">View all</button>
+            </div>
+            <ul class="entry-list" id="recentList"></ul>
+            <p class="empty" id="recentEmpty" hidden>
+              Nothing dictated yet. Press your hotkey in any app and speak; the words land here too.
+            </p>
+          </section>
+        </section>
+
+        <section class="view" data-view="history" hidden>
+          <header class="panel-head panel-head--tall">
+            <div>
+              <p class="eyebrow">The archive</p>
+              <h2 class="display section-title">History</h2>
+            </div>
+            <div class="toolbar">
+              <label class="search">
+                <span class="search-icon" aria-hidden="true"></span>
+                <input class="input" id="searchInput" type="search" placeholder="Search dictations" aria-label="Search dictations" />
+              </label>
+              <button class="btn btn-danger btn-sm" type="button" id="clearHistory">Clear all</button>
+            </div>
+          </header>
+          <ul class="entry-list" id="historyList"></ul>
+          <p class="empty" id="historyEmpty" hidden></p>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="./app/dashboard.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' ws://localhost:* http://localhost:*; media-src 'self' blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="color-scheme" content="dark" />
+    <title>AuraFlow · Menu</title>
+  </head>
+  <body class="tray-page">
+    <div class="tray" role="presentation">
+      <header class="tray-head">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div class="tray-titles">
+          <p class="tray-title display">AuraFlow</p>
+          <p class="tray-sub">Goth Edition</p>
+        </div>
+      </header>
+      <div class="tray-status">
+        <span class="status-dot is-ok" id="trayDot" aria-hidden="true"></span>
+        <span id="trayStatus">Status: Ready</span>
+      </div>
+      <p class="tray-hint">
+        Dictate with <span class="keycap" id="trayHotkey">Alt + Space</span>
+      </p>
+      <nav class="tray-menu" aria-label="AuraFlow menu">
+        <button class="tray-item" type="button" data-action="open-dashboard"><span class="tray-glyph" aria-hidden="true"></span>Open Dashboard</button>
+        <button class="tray-item" type="button" data-action="open-settings"><span class="tray-glyph" aria-hidden="true"></span>Settings</button>
+        <button class="tray-item" type="button" data-action="check-updates"><span class="tray-glyph" aria-hidden="true"></span>Check for Updates</button>
+        <hr class="tray-divider" />
+        <button class="tray-item is-danger" type="button" data-action="quit"><span class="tray-glyph" aria-hidden="true"></span>Quit Flow (Goth Edition)</button>
+      </nav>
+    </div>
+    <script type="module" src="./app/tray.ts"></script>
+  </body>
+</html>
